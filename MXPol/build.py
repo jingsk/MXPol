@@ -23,7 +23,9 @@ def supercell(a_grid, b, c, reflect):
     atoms_list = []
     for i, a in enumerate(a_grid):
         atoms = unit_cell(a,b,c, orientation = 'ac', use_symm=False)
-        if i > n_grid//2:
+        #this is to make sure for an even grid size, the number of 
+        # opposing polarization are equal. 
+        if i > n_grid//2-1:
             #atoms = reflect(atoms.copy(), [1.0,0,0], center = [a/2, b/2, c/2])
             atoms = reflect_Se(atoms.copy()) if reflect else atoms.copy()
         atoms_list.append(atoms)
