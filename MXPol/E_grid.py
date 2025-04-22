@@ -1,6 +1,6 @@
 import numpy as np
 from scipy import signal
-from io import config
+from MXPol.io import config
 
 #dyn_config = config['dynamics']
 # E_waveform = dyn_config['E_waveform']
@@ -11,18 +11,16 @@ def E_grid(
         E_wave_amp,
         E_waveform,
         E_wavelength,
-        tot_step
+        time
         ):
     if E_waveform == 'uniform':
-        Ex_grid = E_wave_amp * np.ones(tot_step)
+        Ex_grid = E_wave_amp * np.ones_like(time)
 
-    if E_waveform == 'square':
-        step_grid = np.arange(tot_step)
-        Ex_grid = E_wave_amp * signal.square(2 * np.pi * step_grid / E_wavelength)
+    elif E_waveform == 'square':
+        Ex_grid = E_wave_amp * signal.square(2 * np.pi * time / E_wavelength)
 
-    if E_waveform == 'sine':
-        step_grid = np.arange(tot_step)
-        Ex_grid = E_wave_amp * np.sin(2 * np.pi * step_grid / E_wavelength)
+    elif E_waveform == 'sine':
+        Ex_grid = E_wave_amp * np.sin(2 * np.pi * time / E_wavelength)
         
     else:
         raise NotImplementedError('waveform not yet implemented')
