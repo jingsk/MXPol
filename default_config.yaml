@@ -6,8 +6,9 @@ build:
     wave_amp_ang: 0.7
 dynamics:
     time_step_fs: 10
-    tol_step: 500
+    tot_step: 500
     E_waveform: uniform
+    E_wavelength_fs: 5000
     E_wave_amp_mV_per_ang: [0, 5e-4, 2.5e-3, 5e-3, 50e-3]
 analysis:
     subsampling: 50
