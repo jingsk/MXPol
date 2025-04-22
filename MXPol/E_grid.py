@@ -10,17 +10,17 @@ from MXPol.io import config
 def E_grid(
         E_wave_amp,
         E_waveform,
-        E_wavelength,
+        E_period,
         time
         ):
     if E_waveform == 'uniform':
         Ex_grid = E_wave_amp * np.ones_like(time)
 
     elif E_waveform == 'square':
-        Ex_grid = E_wave_amp * signal.square(2 * np.pi * time / E_wavelength)
+        Ex_grid = E_wave_amp * signal.square(2 * np.pi * time / E_period)
 
     elif E_waveform == 'sine':
-        Ex_grid = E_wave_amp * np.sin(2 * np.pi * time / E_wavelength)
+        Ex_grid = E_wave_amp * np.sin(2 * np.pi * time / E_period)
         
     else:
         raise NotImplementedError('waveform not yet implemented')
