@@ -10,7 +10,7 @@ class bec_under_field(Calculator):
     implemented_properties = ['energy','charges', 'forces']
     #implemented_properties += ['stress', 'stresses']  # bulk properties
     default_parameters = {
-        'E_field':0 , # common unit of V/m, q* eV/A in ase unit
+        'E_field': 0 , # common unit of V/m, q* eV/A in ase unit
     }
     nolabel = True
 
@@ -25,6 +25,9 @@ class bec_under_field(Calculator):
     
       Calculator.__init__(self, **kwargs)
     
+    def set_E_field(self, E_field):
+        self.parameters.E_field = E_field
+
     def calculate(
       self,
       atoms=None,
