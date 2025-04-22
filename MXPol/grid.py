@@ -20,7 +20,7 @@ def wave_grid(n, A, waveform = 'smooth square'):
         grid = A * np.sin(2  * np.pi * x/wl) / (np.sqrt(d**2 + np.sin(2  * np.pi * x/wl)**2))
     #atoms_flexed.translate(dis_vec)
     if waveform == 'uniform':
-        grid = np.zeros(n)
+        grid = A * np.ones(n)
     return grid
 
 build_config = config['build']
