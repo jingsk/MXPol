@@ -17,6 +17,8 @@ def E_grid(
         Ex_grid = E_wave_amp * np.ones_like(time)
 
     elif E_waveform == 'square':
+        if time[time<E_period].size % 2 == 1:
+            raise UserWarning("Grid size in each period is an odd number. Expect more positive field than negative.")
         Ex_grid = E_wave_amp * signal.square(2 * np.pi * time / E_period)
 
     elif E_waveform == 'sine':
