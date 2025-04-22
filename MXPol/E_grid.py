@@ -1,6 +1,7 @@
 import numpy as np
 from scipy import signal
 from MXPol.io import config
+import warnings
 
 #dyn_config = config['dynamics']
 # E_waveform = dyn_config['E_waveform']
@@ -18,7 +19,7 @@ def E_grid(
 
     elif E_waveform == 'square':
         if time[time<E_period].size % 2 == 1:
-            raise UserWarning("Grid size in each period is an odd number. Expect more positive field than negative.")
+            warnings.warn("Grid size in each period is an odd number. Expect more positive field than negative.")
         Ex_grid = E_wave_amp * signal.square(2 * np.pi * time / E_period)
 
     elif E_waveform == 'sine':
