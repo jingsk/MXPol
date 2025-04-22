@@ -45,6 +45,8 @@ class bec_under_field(Calculator):
         elif isinstance(self.parameters.E_field, list):
             assert len(self.parameters.E_field) == 3
             E_field = np.array(self.parameters.E_field)
+        elif isinstance(self.parameters.E_field, np.ndarray):
+            E_field = self.parameters.E_field
         else:
             raise ValueError('"E_field" must be a three-component vector.')
         enn = self.parameters.enn
