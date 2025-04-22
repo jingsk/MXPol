@@ -7,7 +7,7 @@ setup(name='monochalcogen_polarization',
         'ase>=3.23',
         'matscipy>=1.1.0',
         'matplotlib>=3.9.0',
-        'becqspr>=1.0',
+        'becqsdr>=1.0',
         'mace-torch>=0.3.12',     
    ]
 )
