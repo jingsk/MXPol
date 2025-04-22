@@ -16,13 +16,3 @@ def read_yaml_file(file_path):
 
 file_path = 'config.yaml'
 config = read_yaml_file(file_path)
-
-# if config == None:
-#     print("using default config")
-#     config = {
-#     "b": 3.9,
-#     "c": 20,
-#     "waveform": "smooth square",
-#     "reflect": True,
-#     "wave_amp": 0.7
-#     }
