@@ -9,7 +9,7 @@ dynamics:
     time_step_fs: 10
     tot_step: 20
     E_waveform: square
-    E_wavelength_fs: 50
+    E_period_fs: 50
     E_wave_amp_mV_per_ang: [0, 5e-4, 2.5e-3, 5e-3, 50e-3]
 analysis:
     subsampling: 50
