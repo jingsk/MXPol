@@ -1,5 +1,5 @@
 import numpy as np
-from io import config
+from MXPol.io import config
 
 def wave_grid(n, A, waveform = 'smooth square'):
     '''
@@ -28,7 +28,7 @@ build_config = config['build']
 a_grid = build_config['b'] + \
     np.abs(wave_grid(
         build_config['n_grid'], 
-        build_config['wave_amp'], 
+        build_config['wave_amp_ang'], 
         build_config['waveform']
         )
     )
