@@ -25,9 +25,12 @@ def supercell(a_grid, b, c, reflect):
         atoms = unit_cell(a,b,c, orientation = 'ac', use_symm=False)
         #this is to make sure for an even grid size, the number of 
         # opposing polarization are equal. 
-        if i > n_grid//2-1:
-            #atoms = reflect(atoms.copy(), [1.0,0,0], center = [a/2, b/2, c/2])
-            atoms = reflect_Se(atoms.copy()) if reflect else atoms.copy()
+        if isinstance(reflect, bool):
+            if i > n_grid//2-1:
+                #atoms = reflect(atoms.copy(), [1.0,0,0], center = [a/2, b/2, c/2])
+                atoms = reflect_Se(atoms.copy()) if reflect else atoms.copy()
+        elif isinstance(reflect, list):
+            atoms = reflect_Se(atoms.copy()) if reflect[i] else atoms.copy()
         atoms_list.append(atoms)
     
     nanosheet = atoms_list[0].copy()
