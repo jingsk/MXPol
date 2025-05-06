@@ -1,7 +1,7 @@
 import numpy as np
 from monochalcogenpy.build import unit_cell
 
-def reflect_Se(atoms):
+def reflect_Ge(atoms):
     '''
     Reflect the Ge atoms by Se anchor points
     Currently hardcoded atomic species Ge to be 0,1 and Se to be 2,3.
@@ -28,9 +28,9 @@ def supercell(a_grid, b, c, reflect):
         if isinstance(reflect, bool):
             if i > n_grid//2-1:
                 #atoms = reflect(atoms.copy(), [1.0,0,0], center = [a/2, b/2, c/2])
-                atoms = reflect_Se(atoms.copy()) if reflect else atoms.copy()
+                atoms = reflect_Ge(atoms.copy()) if reflect else atoms.copy()
         elif isinstance(reflect, list):
-            atoms = reflect_Se(atoms.copy()) if reflect[i] else atoms.copy()
+            atoms = reflect_Ge(atoms.copy()) if reflect[i] else atoms.copy()
         atoms_list.append(atoms)
     
     nanosheet = atoms_list[0].copy()
