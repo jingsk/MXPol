@@ -16,7 +16,7 @@ def reflect_Ge(atoms):
 
 def supercell(a_grid, b, c, reflect):
     '''
-    make 2d supercell with specified a_grid, b, c.
+    make 1d supercell with specified a_grid, b, c.
     Reflection reflects Se at midway point.
     '''
     n_grid = len(a_grid)
