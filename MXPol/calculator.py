@@ -92,7 +92,7 @@ def calc_Ps_from_ref(atoms, ref_atoms, calc, nsteps = 5):
             a.calc = calc
             a.get_potential_energy()
             xml_file = f'{calc.directory}/vasprun.xml'
-            arr = f'{calc.directory}/ase-sort.dat'
+            arr = np.loadtxt(f'{calc.directory}/ase-sort.dat',dtype=int)
             mapping = {k:i for i, (k,v) in enumerate(arr)}
             bec_path.append(read_vasp_bec(xml_file)[[mapping[i] for i in range(len(atoms))]])
     #Ps = np.average(bec_path, axis=0) @ (atoms_unit_cell.get_positions() - ref_atoms.get_positions())
