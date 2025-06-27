@@ -67,3 +67,52 @@ class bec_under_field(Calculator):
         #self.results['energies'] = energies
         self.results['free_energy'] = 0
         self.results['forces'] = forces
+
+def calc_Ps_from_ref(atoms, ref_atoms, calc, nsteps = 5):
+    '''calculates spontaneous polarization according to ref_atoms
+    which is assumed to have zero polarization which is accurate 
+    to the first order. Prepare ref atoms using 
+    MXPol.build.supercell_from_ref.
+    Equations are from Modern Theory of Polarization 
+    by Resta, R., & Vanderbilt, D. (eq 13) and 
+    10.1088/0953-8984/22/16/165902 (eqs 4,5)'''
+    from ase.mep.neb import interpolate
+    from becqsdr.model import E3NN
+    from ase.calculators.vasp import Vasp
+    #ref_atoms = supercell_from_ref(atoms)
+    #write('ref2.vasp',ref_atoms, format='vasp',sort=True)
+    lin_path = [ref_atoms.copy()]*(nsteps-1) + [atoms.copy()]
+    interpolate(lin_path, mic=True)
+    if isinstance(calc, E3NN):
+        bec_path = [calculate_bec(a, calc) for a in lin_path]
+    elif isinstance(calc, Vasp):
+        from becqsdr.io import read_vasp_bec
+        bec_path = []
+        for a in lin_path:
+            a.calc = calc
+            a.get_potential_energy()
+            xml_file = f'{calc.directory}/vasprun.xml'
+            arr = f'{calc.directory}/ase-sort.dat'
+            mapping = {k:i for i, (k,v) in enumerate(arr)}
+            bec_path.append(read_vasp_bec(xml_file)[[mapping[i] for i in range(len(atoms))]])
+    #Ps = np.average(bec_path, axis=0) @ (atoms_unit_cell.get_positions() - ref_atoms.get_positions())
+    Ps = []
+    bec_avg = np.average(bec_path, axis=0)
+    d_pos = atoms.get_positions() - ref_atoms.get_positions()
+    for p, b in zip(d_pos, bec_avg):
+        #b = b.numpy()
+        #p-= ref_pos
+        Ps.append(b @ p)
+    Ps = np.array(Ps)
+    print(Ps.shape)
+    Ps = Ps.reshape(-1,4,3)
+    return np.average(Ps,axis=1) #,d_pos
+
+def calc_Ps(atoms, calc, a_length, b_length, nsteps = 5):
+    '''wrapper for calc_Ps_from_ref.
+    assumes that the atoms are sorted according to 
+    MXPol stride (a then b in a group of 4)'''
+    from MXPol.build import supercell_from_ref
+    ref_atoms = supercell_from_ref(atoms, a_length, b_length, sorted=False)
+    #write('ref2.vasp',ref_atoms, format='vasp',sort=True)
+    return calc_Ps_from_ref(atoms, ref_atoms, enn, nsteps)
