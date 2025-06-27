@@ -115,4 +115,4 @@ def calc_Ps(atoms, calc, a_length, b_length, nsteps = 5):
     from MXPol.build import supercell_from_ref
     ref_atoms = supercell_from_ref(atoms, a_length, b_length, sorted=False)
     #write('ref2.vasp',ref_atoms, format='vasp',sort=True)
-    return calc_Ps_from_ref(atoms, ref_atoms, enn, nsteps)
+    return calc_Ps_from_ref(atoms, ref_atoms, calc, nsteps)
