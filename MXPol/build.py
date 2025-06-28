@@ -173,11 +173,15 @@ def supercell_from_ref(ref_atoms, a_length, b_length, sorted=False, **sort_kwarg
     
     ab_grid = np.zeros([a_length, b_length, 2], dtype=float)
     for i,k in product(np.arange(a_length), np.arange(b_length)):
-        j = (i + 1) % 4
-        l = (k + 1) % 4
+        j = (i + 1) % a_length
+        l = (k + 1) % b_length
         #print(grid[i,k],grid[j,k])
         a = ref_atoms.get_distance(grid[i,k],grid[i,l],mic=True,vector=True)[0]
         b = ref_atoms.get_distance(grid[i,k],grid[j,k],mic=True,vector=True)[1]
+        if a <=0:
+            a += ref_atoms.cell[0,0]
+        if b <=0:
+            b = ref_atoms.cell[1,1]
         ab_grid[i,k] = [a,b]
     c = ref_atoms.cell[2,2]
     atoms_grid = make_atoms_grid(ab_grid, c, reflect=False,mode = 'reference')
