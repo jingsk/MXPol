@@ -30,7 +30,7 @@ def intersect2D(Array_A, Array_B):
 
 def element_index_grid(a_length, b_length, offset = 2, mapping = {}):
     natoms_unit_cell = 4
-    grid = natoms_unit_cell* np.arange(a_length*b_length).reshape(a_length, b_length)+offset
+    grid = natoms_unit_cell* np.arange(a_length*b_length).reshape(b_length, a_length)+offset
         
     if len(mapping) != 0:
         for i,j in product(range(a_length), range(b_length)):
