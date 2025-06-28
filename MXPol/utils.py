@@ -10,16 +10,6 @@ def atoms_mapping(atoms_key, atoms_val):
         atoms_key.get_positions(),atoms_val.get_positions()
         )
     return {k:v for k,v in zip(ind_key, ind_val)}
-
-# def sorted_to_unsorted_mapping(atoms_sorted, atoms_unsorted):
-#     pos_sorted =atoms_sorted.get_positions()
-#     pos_unsorted =atoms_unsorted.get_positions()
-    
-#     _, sort_ind, unsort_ind = intersect2D(pos_sorted,pos_unsorted)
-#     return {k:v for k,v in zip(unsort_ind,sort_ind)}
-
-# def read_mapping(arr_element):
-#     return mapping[arr_element]
     
 def intersect2D(Array_A, Array_B):
   """
@@ -46,3 +36,17 @@ def element_index_grid(a_length, b_length, offset = 2, mapping = {}):
         for i,j in product(range(a_length), range(b_length)):
             grid[i,j] = mapping[grid[i,j]]
     return grid
+
+
+def default_mapping(natoms):
+    '''
+    Map sorted atoms to unsorted one
+    assuming two elements and 4 atoms per unit cell.    
+    For example Ge6Se6 -> Ge2Se2Ge2Se2Ge2Se2
+    '''
+    mapping = {}
+    for i in range(natoms):
+        Se_offset = natoms //2 -2
+        ind = ((i % 4) // 2) * Se_offset + (i % 4) + 2 * (i //4)
+        mapping[i] = ind
+    return mapping
