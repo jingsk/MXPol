@@ -104,7 +104,7 @@ def calc_Ps_from_ref(atoms, ref_atoms, calc, nsteps = 5):
         #p-= ref_pos
         Ps.append(b @ p)
     Ps = np.array(Ps)
-    print(Ps.shape)
+    #print(Ps.shape)
     Ps = Ps.reshape(-1,4,3)
     return np.average(Ps,axis=1) #,d_pos
 
