@@ -98,7 +98,7 @@ def calc_Ps_from_ref(atoms, ref_atoms, calc, nsteps = 5):
     #Ps = np.average(bec_path, axis=0) @ (atoms_unit_cell.get_positions() - ref_atoms.get_positions())
     Ps = []
     bec_avg = np.average(bec_path, axis=0)
-    d_pos = atoms.get_positions() - ref_atoms.get_positions()
+    d_pos = np.array([(atoms+ref_atoms).get_distance(i,i+len(atoms), mic=True, vector=True) for i in range(len(atoms))])
     for p, b in zip(d_pos, bec_avg):
         #b = b.numpy()
         #p-= ref_pos
